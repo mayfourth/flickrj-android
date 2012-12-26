@@ -13,11 +13,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gmail.yuyang226.flickr.photos.Photo;
-import com.gmail.yuyang226.flickr.photos.PhotoList;
 import com.gmail.yuyang226.flickrj.sample.android.R;
 import com.gmail.yuyang226.flickrj.sample.android.images.ImageUtils.DownloadedDrawable;
 import com.gmail.yuyang226.flickrj.sample.android.tasks.ImageDownloadTask;
+import com.googlecode.flickrjandroid.photos.Photo;
+import com.googlecode.flickrjandroid.photos.PhotoList;
 
 /**
  * @author Toby Yu(yuyang226@gmail.com)

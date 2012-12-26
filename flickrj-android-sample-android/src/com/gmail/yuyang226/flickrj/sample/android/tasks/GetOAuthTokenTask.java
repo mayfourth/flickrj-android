@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 
 import android.os.AsyncTask;
 
-import com.gmail.yuyang226.flickr.Flickr;
-import com.gmail.yuyang226.flickr.oauth.OAuth;
-import com.gmail.yuyang226.flickr.oauth.OAuthInterface;
 import com.gmail.yuyang226.flickrj.sample.android.FlickrHelper;
 import com.gmail.yuyang226.flickrj.sample.android.FlickrjAndroidSampleActivity;
+import com.googlecode.flickrjandroid.Flickr;
+import com.googlecode.flickrjandroid.oauth.OAuth;
+import com.googlecode.flickrjandroid.oauth.OAuthInterface;
 
 /**
  * @author Toby Yu(yuyang226@gmail.com)
@@ -27,6 +27,10 @@ public class GetOAuthTokenTask extends AsyncTask<String, Integer, OAuth> {
 		this.activity = context;
 	}
 
+	/**
+	 * 	GetOAuthTokenTask task = new GetOAuthTokenTask(this);
+	 *	task.execute(oauthToken, oauth.getToken().getOauthTokenSecret(), oauthVerifier);
+	 */
 	@Override
 	protected OAuth doInBackground(String... params) {
 		String oauthToken = params[0];
@@ -36,8 +40,8 @@ public class GetOAuthTokenTask extends AsyncTask<String, Integer, OAuth> {
 		Flickr f = FlickrHelper.getInstance().getFlickr();
 		OAuthInterface oauthApi = f.getOAuthInterface();
 		try {
-			return oauthApi.getAccessToken(oauthToken, oauthTokenSecret,
-					verifier);
+			OAuth accessAuth= oauthApi.getAccessToken(oauthToken, oauthTokenSecret,verifier);
+			return accessAuth;
 		} catch (Exception e) {
 			logger.error(e.getLocalizedMessage(), e);
 			return null;

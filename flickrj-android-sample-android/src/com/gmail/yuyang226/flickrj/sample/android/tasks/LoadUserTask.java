@@ -14,13 +14,13 @@ import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.gmail.yuyang226.flickr.Flickr;
-import com.gmail.yuyang226.flickr.oauth.OAuth;
-import com.gmail.yuyang226.flickr.oauth.OAuthToken;
-import com.gmail.yuyang226.flickr.people.User;
 import com.gmail.yuyang226.flickrj.sample.android.FlickrHelper;
 import com.gmail.yuyang226.flickrj.sample.android.FlickrjAndroidSampleActivity;
 import com.gmail.yuyang226.flickrj.sample.android.images.ImageUtils.DownloadedDrawable;
+import com.googlecode.flickrjandroid.Flickr;
+import com.googlecode.flickrjandroid.oauth.OAuth;
+import com.googlecode.flickrjandroid.oauth.OAuthToken;
+import com.googlecode.flickrjandroid.people.User;
 
 public class LoadUserTask extends AsyncTask<OAuth, Void, User> {
 	/**
@@ -58,16 +58,19 @@ public class LoadUserTask extends AsyncTask<OAuth, Void, User> {
 
 	/* (non-Javadoc)
 	 * @see android.os.AsyncTask#doInBackground(Params[])
+	 * 
+	 * @param params is oauth object since new LoadUserTask(this, userIcon).execute(oauth)
 	 */
 	@Override
 	protected User doInBackground(OAuth... params) {
 		OAuth oauth = params[0];
-		User user = oauth.getUser();
-		OAuthToken token = oauth.getToken();
+		User user = oauth.getUser();  //User [id=21040560@N03, username=kai_xu]
+		OAuthToken token = oauth.getToken();  //OAuthToken [oauthToken=72157632328080604-76a4a160ffd56fcd, oauthTokenSecret=e3a30c3df070289d]
 		try {
 			Flickr f = FlickrHelper.getInstance()
 					.getFlickrAuthed(token.getOauthToken(), token.getOauthTokenSecret());
-			return f.getPeopleInterface().getInfo(user.getId());
+			User u= f.getPeopleInterface().getInfo(user.getId());   //network IO
+			return u;
 		} catch (Exception e) {
 			Toast.makeText(flickrjAndroidSampleActivity, e.toString(), Toast.LENGTH_LONG).show();
 			logger.error(e.getLocalizedMessage(), e);

@@ -2,13 +2,13 @@ package com.gmail.yuyang226.flickrj.sample.android;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import com.gmail.yuyang226.flickr.Flickr;
-import com.gmail.yuyang226.flickr.REST;
-import com.gmail.yuyang226.flickr.RequestContext;
-import com.gmail.yuyang226.flickr.interestingness.InterestingnessInterface;
-import com.gmail.yuyang226.flickr.oauth.OAuth;
-import com.gmail.yuyang226.flickr.oauth.OAuthToken;
-import com.gmail.yuyang226.flickr.photos.PhotosInterface;
+import com.googlecode.flickrjandroid.Flickr;
+import com.googlecode.flickrjandroid.REST;
+import com.googlecode.flickrjandroid.RequestContext;
+import com.googlecode.flickrjandroid.interestingness.InterestingnessInterface;
+import com.googlecode.flickrjandroid.oauth.OAuth;
+import com.googlecode.flickrjandroid.oauth.OAuthToken;
+import com.googlecode.flickrjandroid.photos.PhotosInterface;
 
 public final class FlickrHelper {
 
@@ -37,6 +37,9 @@ public final class FlickrHelper {
 		}
 	}
 
+	/**
+	 * OAuthToken [oauthToken=72157632328080604-76a4a160ffd56fcd, oauthTokenSecret=e3a30c3df070289d]
+	 */
 	public Flickr getFlickrAuthed(String token, String secret) {
 		Flickr f = getFlickr();
 		RequestContext requestContext = RequestContext.getRequestContext();

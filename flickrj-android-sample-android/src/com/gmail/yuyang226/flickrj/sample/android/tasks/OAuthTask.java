@@ -17,11 +17,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.gmail.yuyang226.flickr.Flickr;
-import com.gmail.yuyang226.flickr.auth.Permission;
-import com.gmail.yuyang226.flickr.oauth.OAuthToken;
 import com.gmail.yuyang226.flickrj.sample.android.FlickrHelper;
 import com.gmail.yuyang226.flickrj.sample.android.FlickrjAndroidSampleActivity;
+import com.googlecode.flickrjandroid.Flickr;
+import com.googlecode.flickrjandroid.auth.Permission;
+import com.googlecode.flickrjandroid.oauth.OAuthToken;
 
 /**
  * Represents the task to start the oauth process.
@@ -31,10 +31,8 @@ import com.gmail.yuyang226.flickrj.sample.android.FlickrjAndroidSampleActivity;
  */
 public class OAuthTask extends AsyncTask<Void, Integer, String> {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(OAuthTask.class);
-	private static final Uri OAUTH_CALLBACK_URI = Uri.parse(FlickrjAndroidSampleActivity.CALLBACK_SCHEME
-			+ "://oauth"); //$NON-NLS-1$
+	private static final Logger logger = LoggerFactory.getLogger(OAuthTask.class);
+	private static final Uri OAUTH_CALLBACK_URI = Uri.parse(FlickrjAndroidSampleActivity.CALLBACK_SCHEME+ "://oauth"); //$NON-NLS-1$
 
 	/**
 	 * The context.
@@ -49,7 +47,7 @@ public class OAuthTask extends AsyncTask<Void, Integer, String> {
 	/**
 	 * Constructor.
 	 * 
-	 * @param context
+	 * @param context   FlickrjAndroidSampleActivity instance
 	 */
 	public OAuthTask(Context context) {
 		super();
@@ -59,8 +57,7 @@ public class OAuthTask extends AsyncTask<Void, Integer, String> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		mProgressDialog = ProgressDialog.show(mContext,
-				"", "Generating the authorization request..."); //$NON-NLS-1$ //$NON-NLS-2$
+		mProgressDialog = ProgressDialog.show(mContext,"", "Generating the authorization request...");
 		mProgressDialog.setCanceledOnTouchOutside(true);
 		mProgressDialog.setCancelable(true);
 		mProgressDialog.setOnCancelListener(new OnCancelListener() {
@@ -75,16 +72,16 @@ public class OAuthTask extends AsyncTask<Void, Integer, String> {
 	 * (non-Javadoc)
 	 * 
 	 * @see android.os.AsyncTask#doInBackground(Params[])
+	 * 
+	 * @param null because  new OAuthTask(this).execute(); 
 	 */
 	@Override
 	protected String doInBackground(Void... params) {
 		try {
 			Flickr f = FlickrHelper.getInstance().getFlickr();
-			OAuthToken oauthToken = f.getOAuthInterface().getRequestToken(
-					OAUTH_CALLBACK_URI.toString());
+			OAuthToken oauthToken = f.getOAuthInterface().getRequestToken(OAUTH_CALLBACK_URI.toString());
 			saveTokenSecrent(oauthToken.getOauthTokenSecret());
-			URL oauthUrl = f.getOAuthInterface().buildAuthenticationUrl(
-					Permission.READ, oauthToken);
+			URL oauthUrl = f.getOAuthInterface().buildAuthenticationUrl(Permission.READ, oauthToken);
 			return oauthUrl.toString();
 		} catch (Exception e) {
 			logger.error("Error to oauth", e); //$NON-NLS-1$
@@ -110,8 +107,7 @@ public class OAuthTask extends AsyncTask<Void, Integer, String> {
 			mProgressDialog.dismiss();
 		}
 		if (result != null && !result.startsWith("error") ) { //$NON-NLS-1$
-			mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri
-					.parse(result)));
+			mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(result)));
 		} else {
 			Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
 		}
