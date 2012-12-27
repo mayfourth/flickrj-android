@@ -52,7 +52,7 @@ public class FlickrjAndroidSampleActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		cleanupOAuthToken(); //kxu
+		cleanupOAuthToken();
 		
 		this.textUserTitle = (TextView) this.findViewById(R.id.profilePageTitle);
 		this.textUserName = (TextView) this.findViewById(R.id.userScreenName);
@@ -88,8 +88,6 @@ public class FlickrjAndroidSampleActivity extends Activity {
     public void onDestroy() {
     	listView.setAdapter(null);
         super.onDestroy();
-        
-        //cleanupOAuthToken(); //kxu
     }
     
 	/* (non-Javadoc)
@@ -122,13 +120,13 @@ public class FlickrjAndroidSampleActivity extends Activity {
 		OAuth savedToken = getOAuthToken();
 		if (CALLBACK_SCHEME.equals(scheme) && (savedToken == null || savedToken.getUser() == null)) {
 			Uri uri = intent.getData();
-			String query = uri.getQuery(); //uri==>  flickrj-android-sample-oauth://oauth?oauth_token=72157632329868125-5d76f2d98bf2612a&oauth_verifier=f04e197df2dee57d
+			String query = uri.getQuery(); //uri==>  flickrj-android-sample-oauth://oauth?oauth_token=<x>&oauth_verifier=<y>
 			logger.debug("Returned Query: {}", query); //$NON-NLS-1$
 			String[] data = query.split("&"); //$NON-NLS-1$
 			if (data != null && data.length == 2) {
-				String oauthToken = data[0].substring(data[0].indexOf("=") + 1); //72157632329868125-5d76f2d98bf2612a
+				String oauthToken = data[0].substring(data[0].indexOf("=") + 1);
 				String oauthVerifier = data[1]
-						.substring(data[1].indexOf("=") + 1); //f04e197df2dee57d
+						.substring(data[1].indexOf("=") + 1);
 				logger.debug("OAuth Token: {}; OAuth Verifier: {}", oauthToken, oauthVerifier); //$NON-NLS-1$
 
 				OAuth oauth = getOAuthToken();
@@ -171,15 +169,15 @@ public class FlickrjAndroidSampleActivity extends Activity {
     public OAuth getOAuthToken() {
     	 //Restore preferences
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        String oauthTokenString = settings.getString(KEY_OAUTH_TOKEN, null); //72157632328080604-76a4a160ffd56fcd
-        String tokenSecret = settings.getString(KEY_TOKEN_SECRET, null); //e3a30c3df070289d
+        String oauthTokenString = settings.getString(KEY_OAUTH_TOKEN, null);
+        String tokenSecret = settings.getString(KEY_TOKEN_SECRET, null);
         if (oauthTokenString == null && tokenSecret == null) {
         	logger.warn("No oauth token retrieved"); //$NON-NLS-1$
         	return null;
         }
         OAuth oauth = new OAuth();
-        String userName = settings.getString(KEY_USER_NAME, null);  //kai_xu
-        String userId = settings.getString(KEY_USER_ID, null);   //21040560@N03
+        String userName = settings.getString(KEY_USER_NAME, null);
+        String userId = settings.getString(KEY_USER_ID, null);
         if (userId != null) {
         	User user = new User();
         	user.setUsername(userName);
@@ -188,8 +186,8 @@ public class FlickrjAndroidSampleActivity extends Activity {
         }
         OAuthToken oauthToken = new OAuthToken();
         oauth.setToken(oauthToken);
-        oauthToken.setOauthToken(oauthTokenString);  //72157632328080604-76a4a160ffd56fcd
-        oauthToken.setOauthTokenSecret(tokenSecret); //e3a30c3df070289d
+        oauthToken.setOauthToken(oauthTokenString);
+        oauthToken.setOauthTokenSecret(tokenSecret);
         logger.debug("Retrieved token from preference store: oauth token={}, and token secret={}", oauthTokenString, tokenSecret); //$NON-NLS-1$
         return oauth;
     }

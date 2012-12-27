@@ -65,7 +65,7 @@ public class LoadUserTask extends AsyncTask<OAuth, Void, User> {
 	protected User doInBackground(OAuth... params) {
 		OAuth oauth = params[0];
 		User user = oauth.getUser();  //User [id=21040560@N03, username=kai_xu]
-		OAuthToken token = oauth.getToken();  //OAuthToken [oauthToken=72157632328080604-76a4a160ffd56fcd, oauthTokenSecret=e3a30c3df070289d]
+		OAuthToken token = oauth.getToken();  //OAuthToken [oauthToken=<x>, oauthTokenSecret=<y>]
 		try {
 			Flickr f = FlickrHelper.getInstance()
 					.getFlickrAuthed(token.getOauthToken(), token.getOauthTokenSecret());

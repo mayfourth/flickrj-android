@@ -82,6 +82,7 @@ public class OAuthTask extends AsyncTask<Void, Integer, String> {
 			OAuthToken oauthToken = f.getOAuthInterface().getRequestToken(OAUTH_CALLBACK_URI.toString());
 			saveTokenSecrent(oauthToken.getOauthTokenSecret());
 			URL oauthUrl = f.getOAuthInterface().buildAuthenticationUrl(Permission.READ, oauthToken);
+			//http://www.flickr.com/services/oauth/authorize?oauth_token=<x>&perms=read
 			return oauthUrl.toString();
 		} catch (Exception e) {
 			logger.error("Error to oauth", e); //$NON-NLS-1$
@@ -107,7 +108,7 @@ public class OAuthTask extends AsyncTask<Void, Integer, String> {
 			mProgressDialog.dismiss();
 		}
 		if (result != null && !result.startsWith("error") ) { //$NON-NLS-1$
-			mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(result)));
+			mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(result)));  //start oauth step asking user to provide authorization  
 		} else {
 			Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
 		}

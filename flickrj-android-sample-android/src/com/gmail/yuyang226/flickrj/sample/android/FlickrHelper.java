@@ -38,7 +38,6 @@ public final class FlickrHelper {
 	}
 
 	/**
-	 * OAuthToken [oauthToken=72157632328080604-76a4a160ffd56fcd, oauthTokenSecret=e3a30c3df070289d]
 	 */
 	public Flickr getFlickrAuthed(String token, String secret) {
 		Flickr f = getFlickr();
